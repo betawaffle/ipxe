@@ -96,15 +96,12 @@ static char *syslog_domain;
  */
 int syslog_send ( struct interface *xfer, unsigned int severity,
 		  const char *message, const char *terminator ) {
-	const char *hostname = ( syslog_hostname ? syslog_hostname : "" );
-	const char *domain = ( ( hostname[0] && syslog_domain ) ?
-			       syslog_domain : "" );
+	const char *hostname = ( syslog_hostname ? syslog_hostname : "-" );
 
-	return xfer_printf ( xfer, "<%d>%s%s%s%sipxe: %s%s",
+	return xfer_printf ( xfer, "<%d>1 - %s ipxe - - - %s%s",
 			     SYSLOG_PRIORITY ( SYSLOG_DEFAULT_FACILITY,
-					       severity ), hostname,
-			     ( domain[0] ? "." : "" ), domain,
-			     ( hostname[0] ? " " : "" ), message, terminator );
+					       severity ), hostname, message,
+			     terminator );
 }
 
 /******************************************************************************
